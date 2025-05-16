@@ -1,0 +1,47 @@
+/* components/Button.css */
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* Варианты */
+.default {
+    background-color: #ccc;
+    color: black;
+}
+
+
+.location {
+    background-color: #6eac39;
+    color: white;
+}
+
+
+.secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.route {
+    background-color: #f9f0e9;
+    border: 0.1rem solid black;
+    color: black;
+}
+
+.ready_routes {
+    border: none;
+    background-color: #f9f0e9;
+    color: black;
+    font-weight: bold;
+}
+
+
+/* disabled */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

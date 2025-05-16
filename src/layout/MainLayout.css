@@ -1,0 +1,23 @@
+.main-content {
+    /* flex: 1; Занимает всё свободное место */
+    overflow: auto; /* или hidden */
+    width: 100%;
+    height: calc(100vh - 8vh);
+    position: relative;
+    overflow: hidden;
+}
+
+
+.main-content {
+    width: 100vw;
+    /* 100% экрана минус высота header */
+    height: calc(100vh - 8vh); 
+    /* Сдвигаем вниз на высоту header */
+    /* margin-top: 8vh;        */
+    /* Скролл только внутри main-content */    
+    overflow: auto;       
+    /* Для внутреннего позиционирования */     
+    position: relative;  
+    /* Для отладки (убрать потом) */      
+    background: #f9f0e9;          
+}
