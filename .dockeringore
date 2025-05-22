@@ -1,7 +1,7 @@
 // чтобы исключить копирование локальных модулей
 node_modules
 .git
-.env
+; .env
 dist
 *.log
 .DS_Store
