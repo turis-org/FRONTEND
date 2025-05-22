@@ -1,6 +1,6 @@
 import Map from "../components/Map";
 import MapControls from "../components/MapControls";
-import "./Homepage.css";
+import "./HomePage.css";
 import { useState } from "react";
 import { useLocationContext } from "../context/LocationContext";
 import { fetchNearbyPlaces } from "../api/places";
@@ -21,19 +21,6 @@ export default function HomePage() {
       const handlePrevRoute = () => {
         setCurrentRouteIndex((prev) => Math.max(prev - 1, 0));
       };
-
-    // const handleShowPlaces = async () => {
-    //     console.log("Местоположение");
-    //     if (!location) return;
-    //     try {
-    //         const data = await fetchNearbyPlaces(location.lat, location.lng);
-    //         setPlaces(data);
-    //         console.log("Places set");
-    //         setDisplayedContent("places"); // При нажатии показываем достопримечательности
-    //     } catch (err) {
-    //         alert("Не удалось загрузить достопримечательности");
-    //     }
-    // };
 
 
     const handleShowPlaces = async () => {
