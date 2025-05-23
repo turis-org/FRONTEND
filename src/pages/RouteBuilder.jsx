@@ -75,14 +75,6 @@ export default function RouteBuilder() {
 
     const allValid = fromValid && toValid && validStops.every(Boolean);
 
-    // const handleBuildRoute = () => {
-    //     if (!allValid) return;
-    //     console.log("Маршрут от:", from);
-    //     console.log("Через:", stops);
-    //     console.log("До:", to);
-    //     // здесь логика вызова API маршрутизации
-    // };
-
     const handleBuildRoute = async () => {
         console.log("i'm in handleBuildRoute");
         console.log("allValid = ", allValid);
@@ -112,7 +104,7 @@ export default function RouteBuilder() {
                     })
                 );
 
-                navigate(`/my-route/${result.id}`);
+                navigate(`/routes/${result.id}`);
             } else {
                 alert("Не удалось построить маршрут.");
             }
@@ -282,137 +274,3 @@ function AutoInput({
         </div>
     );
 }
-
-// // компонент с автодополнением
-// function AutoInput({
-//     label,
-//     value,
-//     onChange,
-//     suggestions,
-//     setSuggestions,
-//     onValidChange,
-//     onRemove,
-// }) {
-//     const [inputValue, setInputValue] = useState(value);
-//     const [isOpen, setIsOpen] = useState(false);
-//     const containerRef = useRef(null);
-//     const debouncedValue = useDebounce(inputValue, 500);
-
-//     useEffect(() => {
-//         const handleClickOutside = (e) => {
-//             if (
-//                 containerRef.current &&
-//                 !containerRef.current.contains(e.target)
-//             ) {
-//                 setIsOpen(false);
-//             }
-//         };
-//         const handleEsc = (e) => {
-//             if (e.key === "Escape") setIsOpen(false);
-//         };
-//         document.addEventListener("mousedown", handleClickOutside);
-//         document.addEventListener("keydown", handleEsc);
-//         return () => {
-//             document.removeEventListener("mousedown", handleClickOutside);
-//             document.removeEventListener("keydown", handleEsc);
-//         };
-//     }, []);
-
-//     useEffect(() => {
-//         setInputValue(value);
-//     }, [value]);
-
-//     const handleChange = async (e) => {
-//         const val = e.target.value;
-//         setInputValue(val);
-//         onChange(val);
-//         onValidChange?.(false);
-//         if (val.length >= 3) {
-//             const results = await fetchSuggestions(val);
-//             setSuggestions(results);
-//             setIsOpen(true);
-//         } else {
-//             setSuggestions([]);
-//             setIsOpen(false);
-//         }
-//     };
-
-//     const handleSelect = (val) => {
-//         setInputValue(val);
-//         onChange(val);
-//         onValidChange?.(true);
-//         setSuggestions([]);
-//         setIsOpen(false);
-//     };
-
-//     return (
-//         <div className="auto-input" value={inputValue}>
-//             <div className="input-with-remove">
-//                 <input
-//                     type="text"
-//                     placeholder={label}
-//                     value={inputValue}
-//                     onChange={handleChange}
-//                     onFocus={() => {
-//                         if (suggestions.length > 0) setIsOpen(true);
-//                     }}
-//                     autoComplete="off"
-//                 />
-//                 {onRemove && (
-//                     <button
-//                         className="remove-button"
-//                         onClick={onRemove}
-//                         type="button"
-//                     >
-//                         ✖
-//                     </button>
-//                 )}
-//             </div>
-//             {isOpen && suggestions.length > 0 && (
-//                 <ul className="suggestions-list">
-//                     {suggestions.map((s, i) => (
-//                         <li key={i} onClick={() => handleSelect(s)}>
-//                             {s}
-//                         </li>
-//                     ))}
-//                 </ul>
-//             )}
-//         </div>
-//     );
-// }
-
-// // components/RouteBuilder.jsx
-// import { useState } from "react";
-// import Map from "./Map";
-// import "./RouteBuilder.css";
-
-// export default function RouteBuilder() {
-//   const [from, setFrom] = useState("");
-//   const [to, setTo] = useState("");
-
-//   const handleBuildRoute = () => {
-//     console.log("Маршрут от:", from, "до:", to);
-//     // Здесь будет логика вызова API маршрутизации
-//   };
-
-//   return (
-//     <div className="route-builder">
-//       <Map />
-//       <div className="form-container">
-//         <input
-//           type="text"
-//           placeholder="Откуда?"
-//           value={from}
-//           onChange={(e) => setFrom(e.target.value)}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Куда?"
-//           value={to}
-//           onChange={(e) => setTo(e.target.value)}
-//         />
-//         <button onClick={handleBuildRoute}>Построить маршрут</button>
-//       </div>
-//     </div>
-//   );
-// }

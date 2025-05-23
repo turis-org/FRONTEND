@@ -1,14 +1,8 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
-    useNavigate,
-    useLocation,
-    Link,
 } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -17,6 +11,7 @@ import RouteBuilder from "./pages/RouteBuilder";
 import RouteResult from "./pages/RouteResult";
 import MainLayout from "./layout/MainLayout";
 import { LocationProvider } from "./context/LocationContext";
+import ReadyRoutesPage from "./pages/ReadyRoutesPage";
 
 export default function App() {
     return (
@@ -32,9 +27,10 @@ export default function App() {
                         />{" "}
                         {/* Новый путь */}
                         <Route
-                            path="/my-route/:routeId"
+                            path="/routes/:routeId"
                             element={<RouteResult />}
                         />
+                        <Route path="/ready-routes" element={<ReadyRoutesPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
                 </Routes>

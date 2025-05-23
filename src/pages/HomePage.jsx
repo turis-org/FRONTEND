@@ -39,7 +39,7 @@ export default function HomePage() {
         console.log("Маршруты");
         if (!location) return;
         try {
-            radius = 1000;
+            const radius = 1000;
             const data = await fetchNearbyRoutes(
                 location.lat,
                 location.lng,
@@ -56,13 +56,15 @@ export default function HomePage() {
     return (
         <div className="home-page">
             <Map
-                places={displayedContent === "places" ? places : []} // Отображаем только места, если выбраны достопримечательности
-                // routes={displayedContent === "routes" ? routes : []} // Отображаем маршруты, если выбраны маршруты
+                // Отображаем только места, если выбраны достопримечательности
+                places={displayedContent === "places" ? places : []} 
+                // Отображаем маршруты, если выбраны маршруты
                 routes={
                     displayedContent === "routes" && routes.length > 0
                         ? [routes[currentRouteIndex]]
                         : []
                 }
+                shouldCenterOnRoute = {true}
             />
             <MapControls
                 showLocation
