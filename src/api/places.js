@@ -11,22 +11,6 @@ export const fetchNearbyPlaces = async (lat, lon, radius = 5000) => {
 };
 
 
-// export async function fetchNearbyPlaces(lat, lon, radius = 5000) {
-//   try {
-//     const response = await fetch(`${API_BASE_URL}/places/nearby?lat=${lat}&lon=${lon}&radius=${radius}`);
-    
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-    
-//     return await response.json();
-//   } catch (error) {
-//     console.error('Ошибка при загрузке мест:', error);
-//     throw error;
-//   }
-// }
-
-
 // export async function fetchNearbyPlaces(lat, lon) {
 //     // Пока вместо настоящего бэка — фиктивный ответ
 //     console.log("places are going to be returned")
