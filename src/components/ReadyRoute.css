@@ -1,0 +1,43 @@
+.ready-route {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.ready-route:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.route-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.route-map-container {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.route-info {
+    padding: 0 5px;
+}
+
+.route-description {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.route-points {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #888;
+}

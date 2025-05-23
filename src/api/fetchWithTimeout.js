@@ -1,10 +1,11 @@
-import './config'
+import { DEFAULT_API_TIMEOUT } from './config';
 
 export async function fetchWithTimeout(url, options = {}, timeout = DEFAULT_API_TIMEOUT) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
 
   try {
+    console.log('Ждём ответа от сервера...');
     const response = await fetch(url, {
       ...options,
       signal: controller.signal,
@@ -16,6 +17,7 @@ export async function fetchWithTimeout(url, options = {}, timeout = DEFAULT_API_
     }
     throw error;
   }  finally {
-    clearTimeout(id); // всегда чистим таймер
+    // всегда чистим таймер
+    clearTimeout(id); 
   }
 }

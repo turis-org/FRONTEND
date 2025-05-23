@@ -27,7 +27,7 @@ export default function Header() {
             <img src={logo} alt="Turis" className="logo" />
 
             <nav className={`nav ${menuOpen ? "open" : ""}`}>
-                <Button variant="ready_routes">готовые маршруты</Button>
+                <Button variant="ready_routes" to="/ready-routes">готовые маршруты</Button>
                 <Button variant="route" to="/my-route">построить свой маршрут</Button>
                 <Button variant="location" onClick={handleAllowLocation}>
                     разрешить местоположение

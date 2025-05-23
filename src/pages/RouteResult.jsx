@@ -1,16 +1,31 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Map from "../components/Map";
-import "./RouteResult.css"
+import "./RouteResult.css";
 
-export default function RouteResult() {
+export default function RouteResult({}) {
     const { routeId } = useParams();
+    const location = useLocation(); // Получаем location
     const [routeData, setRouteData] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    console.log("routeId from URL:", routeId); // Добавьте эту строку
+    console.log("Location state:", location.state); // Добавим логирование state
     useEffect(() => {
+        // if we got route from state
+        if (location.state?.route) {
+            console.log("Using route from navigation state");
+            setRouteData(location.state.route);
+            setLoading(false);
+            
+            // need to think about it
+            // // add data to local storage
+            // localStorage.setItem(`route:${routeId}`, JSON.stringify(location.state.route));
+            return;
+        }
+
         async function loadRoute() {
-            // 🔍 Пытаемся найти в localStorage
+            // Пытаемся найти в localStorage
             const stored = localStorage.getItem(`route:${routeId}`);
             if (stored) {
                 setRouteData(JSON.parse(stored));
@@ -42,12 +57,14 @@ export default function RouteResult() {
 
     return (
         <div className="route-result">
-            {/* <Map data={routeData.geoJson} /> */}
-            <h2>
-                Маршрут {routeData.name}
-            </h2>
-            
-            <Map routes={[routeData]} places={routeData.places}/>
+            <h2>Маршрут {routeData.name}</h2>
+
+            <Map
+                routes={[routeData]}
+                places={routeData.places}
+                center={routeData.points[0]} // Центрируем на начальной точке
+                shouldCenterOnRoute={true} // Явно указываем центрировать на маршруте
+            />
             {/* <ul>
                 {routeData.places?.map((place, i) => (
                     <li key={i}>

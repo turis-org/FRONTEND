@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import { useLocationContext } from "../context/LocationContext"; // импортируем контекст
+// импортируем контекст
+import { useLocationContext } from "../context/LocationContext"; 
 
 import L from "../libs/leaflet-custom/dist/leaflet";
 import "../libs/leaflet-custom/dist/leaflet.css";
@@ -12,6 +13,8 @@ const Map = ({
     zoom = 13,
     places = [],
     routes = [],
+    shouldCenterOnRoute = false,
+    shouldCenterOnLocation = true,
 }) => {
     const mapRef = useRef(null); // Ссылка на контейнер для карты
     const leafletMapRef = useRef(null); // Ссылка на саму карту
@@ -51,40 +54,25 @@ const Map = ({
         };
     }, []); // Запускаем ОДИН раз при монтировании
 
-    // Обновляем центр карты, если появилось местоположение
+    // Обновленный эффект для центрирования
     useEffect(() => {
-        if (leafletMapRef.current && location) {
-            leafletMapRef.current.setView([location.lat, location.lng], 13);
-        }
-    }, [location]); // Срабатывает при изменении location
+        if (!leafletMapRef.current) return;
 
-    // useEffect(() => {
-    //     console.log("places received:", places);
-    //     const map = leafletMapRef.current;
-    //     if (!map) return;
-    //     // Удаляем старые маркеры
-    //     markersRef.current.forEach((marker) => marker.remove());
-    //     markersRef.current = [];
-    //     // Добавляем новые маркеры
-    //     places.forEach((place) => {
-    //         const marker = L.marker([place.point.lat, place.point.lon])
-    //             .addTo(map)
-    //             // popups
-    //             // .bindPopup(
-    //             //     `<strong>${place.name}</strong><br><a href="${place.otm}" target="_blank">Подробнее</a>`
-    //             // );
-    //             .bindTooltip(
-    //                 place.name,
-    //                 {
-    //                   permanent: true, // <- делаем подпись постоянной
-    //                   direction: "top", // или "right", "left", "bottom"
-    //                   offset: [0, -10], // чуть смещаем вверх, чтобы не перекрывалось маркером
-    //                   className: "custom-label" // можешь стилизовать как хочешь
-    //                 }
-    //               );
-    //         markersRef.current.push(marker);
-    //     });
-    // }, [places]);
+        // Приоритеты центрирования:
+        // 1. Если shouldCenterOnRoute=true и есть маршруты - центрируем на первом маршруте
+        // 2. Если shouldCenterOnLocation=true и есть location - центрируем на location
+        // 3. Иначе используем переданный center или дефолтные координаты
+
+        if (shouldCenterOnRoute && routes.length > 0) {
+            const firstPoint = routes[0].points[0];
+            leafletMapRef.current.setView(firstPoint, zoom);
+        } else if (shouldCenterOnLocation && location) {
+            leafletMapRef.current.setView([location.lat, location.lng], zoom);
+        } else {
+            leafletMapRef.current.setView(center, zoom);
+        }
+    }, [routes, location, zoom, center, shouldCenterOnRoute, shouldCenterOnLocation]);
+
 
     // Обновляем маркеры для places или routes
     useEffect(() => {
@@ -118,7 +106,7 @@ const Map = ({
         // Отрисовка маршрутов
         routes.forEach((route) => {
             if (route.points && route.points.length > 1) {
-                // Только первая и последняя точки (если нужно)
+                // Только первая и последняя точки
                 const first = route.points[0];
                 const last = route.points[route.points.length - 1];
 
@@ -153,24 +141,30 @@ const Map = ({
             }
         });
 
+        
+    }, [places, routes]); // Перезапускаем, если places или routes изменились
+
+
+
+    useEffect(() => {
+        const map = leafletMapRef.current;
         // Добавляем маркер для текущего местоположения
         if (location) {
             L.marker([location.lat, location.lng])
                 .addTo(map)
                 .bindPopup("Ваше местоположение");
         }
-    }, [places, routes, location]); // Перезапускаем, если places или routes изменились
-
+    }, [location]);
     
     return (
         <div
             ref={mapRef}
             className={className}
             style={{
-                // width: '100%',
                 width: "100%",
                 height: "100%",
-                border: "1px solid red", // Для отладки — добавь границу, чтобы увидеть, что контейнер есть
+                // Для отладки
+                border: "1px solid red", 
                 ...style,
             }}
         />
