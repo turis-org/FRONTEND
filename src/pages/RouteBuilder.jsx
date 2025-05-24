@@ -17,7 +17,12 @@ async function fetchSuggestions(query) {
         );
         if (!res.ok) throw new Error("API request failed");
         const data = await res.json();
-        return data.map((item) => item.display_name);
+        console.log(data);
+        return data.map((item) => ({
+            displayName: item.display_name,
+            lat: parseFloat(item.lat), // Конвертируем строку в число
+            lon: parseFloat(item.lon),
+        }));
     } catch (error) {
         console.error("Error fetching suggestions:", error);
         return [];
@@ -26,23 +31,26 @@ async function fetchSuggestions(query) {
 
 export default function RouteBuilder() {
     const [routePoints, setRoutePoints] = useState({
-        from: { value: "", isValid: false },
-        to: { value: "", isValid: false },
+        from: { value: "", isValid: false, coords: null },
+        to: { value: "", isValid: false, coords: null },
         stops: [],
     });
 
     const navigate = useNavigate();
 
-    const handlePointChange = (type, index) => (value, isValid) => {
-        setRoutePoints((prev) => {
-            if (type === "from") return { ...prev, from: { value, isValid } };
-            if (type === "to") return { ...prev, to: { value, isValid } };
+    const handlePointChange =
+        (type, index) =>
+        (value, isValid, coords = null) => {
+            setRoutePoints((prev) => {
+                const newPoint = { value, isValid, coords };
+                if (type === "from") return { ...prev, from: newPoint };
+                if (type === "to") return { ...prev, to: newPoint };
 
-            const stops = [...prev.stops];
-            stops[index] = { value, isValid };
-            return { ...prev, stops };
-        });
-    };
+                const stops = [...prev.stops];
+                stops[index] = newPoint;
+                return { ...prev, stops };
+            });
+        };
 
     const handleAddStop = () => {
         setRoutePoints((prev) => ({
@@ -68,9 +76,21 @@ export default function RouteBuilder() {
 
         try {
             const result = await buildRoute({
-                from: routePoints.from.value,
-                to: routePoints.to.value,
-                stops: routePoints.stops.map((stop) => stop.value),
+                from: {
+                    address: routePoints.from.value,
+                    lat: routePoints.from.coords.lat,
+                    lon: routePoints.from.coords.lon,
+                },
+                to: {
+                    address: routePoints.to.value,
+                    lat: routePoints.to.coords.lat,
+                    lon: routePoints.to.coords.lon,
+                },
+                stops: routePoints.stops.map((stop) => ({
+                    address: stop.value,
+                    lat: stop.coords.lat,
+                    lon: stop.coords.lon,
+                })),
             });
 
             if (result.id) {

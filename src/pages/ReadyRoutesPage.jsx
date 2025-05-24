@@ -51,7 +51,6 @@ export default function ReadyRoutesPage() {
 
     return (
         <div className="ready-routes-page">
-            <h2>Готовые маршруты поблизости</h2>
             <div className="routes-list">
                 {routes.map((route) => (
                     <ReadyRoute key={route.id} route={route} />
