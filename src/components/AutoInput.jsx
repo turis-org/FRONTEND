@@ -1,14 +1,13 @@
 import useAutocomplete from "../hooks/useAutocomplete";
 import { useEffect, useRef } from "react";
 
-
 export default function AutoInput({
     label,
     value,
     onChange,
     onValidChange,
     onRemove,
-    fetchSuggestions
+    fetchSuggestions,
 }) {
     const {
         value: inputValue,
@@ -16,12 +15,10 @@ export default function AutoInput({
         suggestions,
         isOpen,
         setIsOpen,
-        selectSuggestion
+        selectSuggestion,
     } = useAutocomplete(fetchSuggestions, value);
 
     const containerRef = useRef(null);
-
-    
 
     const handleChange = (e) => {
         const val = e.target.value;
@@ -31,21 +28,27 @@ export default function AutoInput({
     };
 
     const handleSelect = (val) => {
-        selectSuggestion(val);
-        onChange(val);
+        selectSuggestion(val.displayName);
+        onChange({
+            address: val.displayName,
+            coords: { lat: val.lat, lon: val.lon },
+        });
         onValidChange?.(true);
     };
 
-
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if (containerRef.current && !containerRef.current.contains(e.target)) {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(e.target)
+            ) {
                 setIsOpen(false);
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     return (
@@ -68,7 +71,7 @@ export default function AutoInput({
                 <ul className="suggestions-list">
                     {suggestions.map((s, i) => (
                         <li key={i} onClick={() => handleSelect(s)}>
-                            {s}
+                            {s.displayName}
                         </li>
                     ))}
                 </ul>
