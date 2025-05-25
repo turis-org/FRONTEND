@@ -5,6 +5,7 @@ export default function AutoInput({
     label,
     value,
     onChange,
+    onValidChange, // Добавляем обратно
     onRemove,
     fetchSuggestions,
 }) {
@@ -23,6 +24,7 @@ export default function AutoInput({
         const val = e.target.value;
         setInputValue(val);
         onChange(val);
+        onValidChange?.(false);
     };
 
     const handleSelect = (val) => {
@@ -33,6 +35,7 @@ export default function AutoInput({
             coords: { lat: val.lat, lon: val.lon },
         });
         console.log({ lat: val.lat, lon: val.lon });
+        onValidChange?.(true);
     };
 
     useEffect(() => {

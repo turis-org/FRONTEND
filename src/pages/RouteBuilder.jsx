@@ -17,7 +17,6 @@ async function fetchSuggestions(query) {
         );
         if (!res.ok) throw new Error("API request failed");
         const data = await res.json();
-        console.log(data);
         return data.map((item) => ({
             displayName: item.display_name,
             lat: parseFloat(item.lat), // Конвертируем строку в число
@@ -81,7 +80,6 @@ export default function RouteBuilder() {
         if (!isRouteValid) return;
 
         try {
-            console.log(routePoints);
             const result = await buildRoute({
                 from: {
                     address: routePoints.from.value,
