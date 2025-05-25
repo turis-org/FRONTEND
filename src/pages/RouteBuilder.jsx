@@ -38,19 +38,25 @@ export default function RouteBuilder() {
 
     const navigate = useNavigate();
 
-    const handlePointChange =
-        (type, index) =>
-        (value, isValid, coords = null) => {
-            setRoutePoints((prev) => {
-                const newPoint = { value, isValid, coords };
-                if (type === "from") return { ...prev, from: newPoint };
-                if (type === "to") return { ...prev, to: newPoint };
+    const handlePointChange = (type, index) => (data) => {
+        // data может быть строкой (при ручном вводе) или объектом (при выборе из подсказок)
+        const isObjectData = typeof data === "object" && data.address;
 
-                const stops = [...prev.stops];
-                stops[index] = newPoint;
-                return { ...prev, stops };
-            });
-        };
+        setRoutePoints((prev) => {
+            const newPoint = {
+                value: isObjectData ? data.address : data,
+                isValid: isObjectData ? data.isValid : false,
+                coords: isObjectData ? data.coords : null,
+            };
+
+            if (type === "from") return { ...prev, from: newPoint };
+            if (type === "to") return { ...prev, to: newPoint };
+
+            const stops = [...prev.stops];
+            stops[index] = newPoint;
+            return { ...prev, stops };
+        });
+    };
 
     const handleAddStop = () => {
         setRoutePoints((prev) => ({
@@ -75,21 +81,19 @@ export default function RouteBuilder() {
         if (!isRouteValid) return;
 
         try {
+            console.log(routePoints);
             const result = await buildRoute({
                 from: {
                     address: routePoints.from.value,
-                    lat: routePoints.from.coords.lat,
-                    lon: routePoints.from.coords.lon,
+                    coords: routePoints.from.coords,
                 },
                 to: {
                     address: routePoints.to.value,
-                    lat: routePoints.to.coords.lat,
-                    lon: routePoints.to.coords.lon,
+                    coords: routePoints.to.coords,
                 },
                 stops: routePoints.stops.map((stop) => ({
                     address: stop.value,
-                    lat: stop.coords.lat,
-                    lon: stop.coords.lon,
+                    coords: stop.coords,
                 })),
             });
 
@@ -119,12 +123,6 @@ export default function RouteBuilder() {
                     label="Откуда?"
                     value={routePoints.from.value}
                     onChange={handlePointChange("from")}
-                    onValidChange={(isValid) =>
-                        handlePointChange("from")(
-                            routePoints.from.value,
-                            isValid
-                        )
-                    }
                     fetchSuggestions={fetchSuggestions}
                 />
 
@@ -134,12 +132,6 @@ export default function RouteBuilder() {
                         label={`Точка ${index + 1}`}
                         value={stop.value}
                         onChange={handlePointChange("stop", index)}
-                        onValidChange={(isValid) =>
-                            handlePointChange("stop", index)(
-                                stop.value,
-                                isValid
-                            )
-                        }
                         onRemove={() => handleRemoveStop(index)}
                         fetchSuggestions={fetchSuggestions}
                     />
@@ -149,9 +141,6 @@ export default function RouteBuilder() {
                     label="Куда?"
                     value={routePoints.to.value}
                     onChange={handlePointChange("to")}
-                    onValidChange={(isValid) =>
-                        handlePointChange("to")(routePoints.to.value, isValid)
-                    }
                     fetchSuggestions={fetchSuggestions}
                 />
 
