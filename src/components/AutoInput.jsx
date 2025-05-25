@@ -5,7 +5,7 @@ export default function AutoInput({
     label,
     value,
     onChange,
-    onValidChange,
+    onValidChange, // Добавляем обратно
     onRemove,
     fetchSuggestions,
 }) {
@@ -31,8 +31,10 @@ export default function AutoInput({
         selectSuggestion(val.displayName);
         onChange({
             address: val.displayName,
+            isValid: true,
             coords: { lat: val.lat, lon: val.lon },
         });
+        console.log({ lat: val.lat, lon: val.lon });
         onValidChange?.(true);
     };
 

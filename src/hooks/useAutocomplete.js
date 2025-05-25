@@ -6,7 +6,7 @@ export default function useAutocomplete(fetchFn, initialValue = '') {
     const [suggestions, setSuggestions] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const isSelectedRef = useRef(false); // Используем ref вместо state
-    const debouncedValue = useDebounce(value, 500);
+    const debouncedValue = useDebounce(value, 1000);
 
     useEffect(() => {
         // Если значение было выбрано из списка - игнорируем

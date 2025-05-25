@@ -86,8 +86,6 @@ const Map = ({
         markersRef.current.forEach((marker) => map.removeLayer(marker));
         markersRef.current = [];
 
-        console.log(places)
-
         // Добавляем маркеры для places
         places.forEach((place) => {
             const marker = L.marker([place.point.lat, place.point.lon])

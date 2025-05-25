@@ -1340,7 +1340,7 @@ export const buildRoute = async ({ from, to, stops }) => {
 
 
 // export async function buildRoute({ from, to, stops }) {
-//     console.log("📦 Симуляция запроса к бэку: buildRoute");
+//     console.log("Симуляция запроса к бэку: buildRoute");
 //     //   await new Promise((res) => setTimeout(res, 500)); // эмуляция задержки
 
 //     // Генерируем фейковый ID маршрута
