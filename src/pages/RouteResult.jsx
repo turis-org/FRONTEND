@@ -17,7 +17,7 @@ export default function RouteResult({}) {
             console.log("Using route from navigation state");
             setRouteData(location.state.route);
             setLoading(false);
-            
+
             // need to think about it
             // // add data to local storage
             // localStorage.setItem(`route:${routeId}`, JSON.stringify(location.state.route));
@@ -56,22 +56,50 @@ export default function RouteResult({}) {
     console.log("routeData", routeData);
 
     return (
-        <div className="route-result">
-            <h2>Маршрут {routeData.name}</h2>
+        <div className="route-result-container">
+            <div className="route-result">
+                <h2>Маршрут</h2>
 
-            <Map
-                routes={[routeData]}
-                places={routeData.places}
-                center={routeData.points[0]} // Центрируем на начальной точке
-                shouldCenterOnRoute={true} // Явно указываем центрировать на маршруте
-            />
-            {/* <ul>
-                {routeData.places?.map((place, i) => (
-                    <li key={i}>
-                        {place.name} — {place.description}
-                    </li>
-                ))}
-            </ul> */}
+                {routeData.places && routeData.places.length > 0 && (
+                    <>
+                        <Map
+                            routes={[routeData]}
+                            places={routeData.places}
+                            center={routeData.points[0]} // Центрируем на начальной точке
+                            shouldCenterOnRoute={true} // Явно указываем центрировать на маршруте
+                            style={{
+                                height: "60%",
+                                borderRadius: "8px",
+                                margin: "10px 20px ",
+                                width: "95%",
+                            }}
+                        />
+                        <h4>Достопримечательности</h4>
+                        <ul>
+                            {routeData.places?.map((place, i) => (
+                                <li key={i}>{place.name}</li>
+                            ))}
+                        </ul>
+                    </>
+                )}
+
+                {!(routeData.places && routeData.places.length > 0) && (
+                    <>
+                        <Map
+                            routes={[routeData]}
+                            places={routeData.places}
+                            center={routeData.points[0]} // Центрируем на начальной точке
+                            shouldCenterOnRoute={true} // Явно указываем центрировать на маршруте
+                            style={{
+                                height: "90%",
+                                borderRadius: "8px",
+                                margin: "10px 20px ",
+                                width: "95%",
+                            }}
+                        />
+                    </>
+                )}
+            </div>
         </div>
     );
 }
