@@ -21,19 +21,34 @@ export default function HomePage() {
         setCurrentRouteIndex((prev) => Math.max(prev - 1, 0));
     };
 
+   
+
     const handleShowPlaces = async () => {
-        if (!location) return;
-        try {
-            const data = await fetchNearbyPlaces(location.lat, location.lng);
-            setPlaces(data);
-            setDisplayedContent("places");
-            setRoutes([]);
-        } catch (err) {
-            console.error(err);
-            setPlaces([]); // Сброс состояния при ошибке
-            alert("Не удалось загрузить достопримечательности");
-        }
-    };
+    if (!location) return;
+    try {
+        const data = await fetchNearbyPlaces(location.lat, location.lng);
+        
+        // Преобразование нового формата в старый
+        const transformedPlaces = data.features.map(feature => ({
+            xid: feature.properties.xid,
+            name: feature.properties.name,
+            point: { 
+                lat: feature.geometry.coordinates[1], 
+                lon: feature.geometry.coordinates[0] 
+            },
+            rate: feature.properties.rate + "h", // или другая логика формирования rate
+            otm: `https://opentripmap.com/en/card/${feature.properties.xid}`,
+        }));
+
+        setPlaces(transformedPlaces);
+        setDisplayedContent("places");
+        setRoutes([]);
+    } catch (err) {
+        console.error(err);
+        setPlaces([]);
+        alert("Не удалось загрузить достопримечательности");
+    }
+};
 
     const handleShowRoutes = async () => {
         console.log("Маршруты");
