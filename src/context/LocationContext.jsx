@@ -53,7 +53,7 @@ export function LocationProvider({ children }) {
     };
 
     const clearLocation = () => {
-        console.log("👉 Местоположение очищено");
+        // console.log("👉 Местоположение очищено");
         setLocation(null);
         localStorage.removeItem("userLocation");
     };
