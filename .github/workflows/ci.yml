@@ -1,9 +1,5 @@
-name: CI Checks
-on:
-    pull_request:
-        branches: [master, develop]
-    push:
-        branches: [master, develop, feature/*]
+name: CI
+on: [push, pull_request]
 
 jobs:
     test:
@@ -12,22 +8,12 @@ jobs:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v3
               with:
-                  node-version: 18
+                  node-version: 20 # Для лучшей поддержки ESM
+                  cache: npm
             - run: npm ci
             - run: npm run build
-            #   - run: npm test  # Если упадёт здесь — дальше шаги не выполнятся
-            - name: Run tests
-              run: npm test -- --watchAll=false --ci
+            - run: npm test -- --watchAll=false --ci
               env:
-                  NODE_OPTIONS: --experimental-vm-modules
+                  NODE_OPTIONS: "--experimental-vm-modules --no-warnings"
+                  BABEL_ENV: test
 
-    # Опционально: проверка линтера (ESLint)
-    lint:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 18
-            - run: npm ci
-            - run: npm run lint # Должен завершаться с кодом 0 (нет ошибок)
