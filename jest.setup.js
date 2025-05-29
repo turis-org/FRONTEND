@@ -9,3 +9,10 @@ global.TextDecoder = TextDecoder;
 
 const jestDom = require('@testing-library/jest-dom');
 expect.extend(jestDom);
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({}),
+  })
+);

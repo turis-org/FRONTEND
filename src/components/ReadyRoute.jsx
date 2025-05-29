@@ -7,7 +7,7 @@ export default function ReadyRoute({ route }) {
 
     const handleClick = () => {
         // Переход на страницу с деталями маршрута
-        console.log("Navigating with ID:", route.id);
+        // console.log("Navigating with ID:", route.id);
         navigate(`/routes/${route.id}`, {
             state: {
                 route: route,
