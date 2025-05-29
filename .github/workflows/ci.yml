@@ -11,7 +11,13 @@ jobs:
                   node-version: 20 # Для лучшей поддержки ESM
                   cache: npm
             - run: npm ci
-            - run: npm run build
+            - run: npm run build\
+            - name: Debug versions
+              run: |
+                    node -v
+                    npm -v
+                    npx jest --version
+                    npx babel-jest --version
             - run: npm test -- --watchAll=false --ci
               env:
                   NODE_OPTIONS: "--experimental-vm-modules --no-warnings"
