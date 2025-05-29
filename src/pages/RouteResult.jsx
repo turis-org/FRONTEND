@@ -9,12 +9,12 @@ export default function RouteResult({}) {
     const [routeData, setRouteData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    console.log("routeId from URL:", routeId); // Добавьте эту строку
-    console.log("Location state:", location.state); // Добавим логирование state
+    // console.log("routeId from URL:", routeId); // Добавьте эту строку
+    // console.log("Location state:", location.state); // Добавим логирование state
     useEffect(() => {
         // if we got route from state
         if (location.state?.route) {
-            console.log("Using route from navigation state");
+            // console.log("Using route from navigation state");
             setRouteData(location.state.route);
             setLoading(false);
 
@@ -53,7 +53,7 @@ export default function RouteResult({}) {
     if (loading) return <p>Загрузка маршрута...</p>;
     if (!routeData) return <p>Маршрут не найден</p>;
 
-    console.log("routeData", routeData);
+    // console.log("routeData", routeData);
 
     return (
         <div className="route-result-container">
@@ -65,7 +65,7 @@ export default function RouteResult({}) {
                         <Map
                             routes={[routeData]}
                             places={routeData.places}
-                            center={routeData.points[0]} // Центрируем на начальной точке
+                            center={routeData?.points?.[0] ?? [0, 0]} // Центрируем на начальной точке
                             shouldCenterOnRoute={true} // Явно указываем центрировать на маршруте
                             style={{
                                 height: "60%",
