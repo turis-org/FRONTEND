@@ -27,7 +27,7 @@ const Map = ({
     useEffect(() => {
         // Если карты нет, создаем ее
         if (!leafletMapRef.current && mapRef.current) {
-            console.log("map creating");
+            // console.log("map creating");
             leafletMapRef.current = L.map(mapRef.current, {
                 // Отключаем стандартный контрол
                 zoomControl: false,
@@ -46,7 +46,7 @@ const Map = ({
 
         // Функция очистки при размонтировании компонента
         return () => {
-            console.log("map deleting");
+            // console.log("map deleting");
             if (leafletMapRef.current) {
                 leafletMapRef.current.remove(); // Удаляем карту
                 leafletMapRef.current = null; // Сбрасываем ссылку на карту
