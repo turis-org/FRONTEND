@@ -1,29 +1,33 @@
 name: CI Checks
 on:
-  pull_request:
-    branches: [ master, develop ]
-  push:
-    branches: [ master, develop, feature/* ]
+    pull_request:
+        branches: [master, develop]
+    push:
+        branches: [master, develop, feature/*]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm run build
-      - run: npm test  # Если упадёт здесь — дальше шаги не выполнятся
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+            - run: npm ci
+            - run: npm run build
+            #   - run: npm test  # Если упадёт здесь — дальше шаги не выполнятся
+            - name: Run tests
+              run: npm test -- --watchAll=false --ci
+              env:
+                  NODE_OPTIONS: --experimental-vm-modules
 
-  # Опционально: проверка линтера (ESLint)
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm run lint  # Должен завершаться с кодом 0 (нет ошибок)
+    # Опционально: проверка линтера (ESLint)
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+            - run: npm ci
+            - run: npm run lint # Должен завершаться с кодом 0 (нет ошибок)
