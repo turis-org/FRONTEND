@@ -1,0 +1,29 @@
+name: CI Checks
+on:
+  pull_request:
+    branches: [ master, develop ]
+  push:
+    branches: [ master, develop, feature/* ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run build
+      - run: npm test  # Если упадёт здесь — дальше шаги не выполнятся
+
+  # Опционально: проверка линтера (ESLint)
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run lint  # Должен завершаться с кодом 0 (нет ошибок)
