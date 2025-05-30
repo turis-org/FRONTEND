@@ -27,8 +27,3 @@ jobs:
       - name: Run tests with coverage
         run: npm test -- --coverage
 
-
-      - name: Show coverage
-        run: |
-            cat ./coverage/lcov.info | npx coveralls
-            echo "Coverage report generated!"
