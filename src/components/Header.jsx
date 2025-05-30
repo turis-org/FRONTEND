@@ -27,13 +27,13 @@ export default function Header() {
             <img src={logo} alt="Turis" className="logo" />
 
             <nav className={`nav ${menuOpen ? "open" : ""}`}>
-                <Button variant="ready_routes" to="/ready-routes">готовые маршруты</Button>
-                <Button variant="route" to="/my-route">построить свой маршрут</Button>
+                <Button variant="ready_routes" to="/ready-routes">Готовые маршруты</Button>
+                <Button variant="route" to="/my-route">Построить свой маршрут</Button>
                 <Button variant="location" onClick={handleAllowLocation}>
-                    разрешить местоположение
+                    Разрешить местоположение
                 </Button>
                 <Button variant="default" onClick={clearLocation}>
-                    очистить местоположение
+                    Очистить местоположение
                 </Button>
             </nav>
 

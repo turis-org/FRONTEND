@@ -29,8 +29,8 @@ describe("Header", () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByText("готовые маршруты")).toBeInTheDocument();
-        expect(screen.getByText("построить свой маршрут")).toBeInTheDocument();
+        expect(screen.getByText("Готовые маршруты")).toBeInTheDocument();
+        expect(screen.getByText("Построить свой маршрут")).toBeInTheDocument();
     });
 
     it("calls requestLocation on button click", async () => {
@@ -40,7 +40,7 @@ describe("Header", () => {
             </MemoryRouter>
         );
 
-        await userEvent.click(screen.getByText("разрешить местоположение"));
+        await userEvent.click(screen.getByText("Разрешить местоположение"));
         expect(mockRequestLocation).toHaveBeenCalled(); // <-- Теперь должен пройти
     });
 
