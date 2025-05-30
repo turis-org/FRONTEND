@@ -56,6 +56,14 @@ describe('ReadyRoutesPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  beforeEach(() => {
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+});
+
+afterEach(() => {
+  jest.restoreAllMocks(); // Восстанавливаем оригинальные реализации
+});
 
   it('shows loading state initially', () => {
     render(
