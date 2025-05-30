@@ -27,7 +27,20 @@
         ],
         "extensionsToTreatAsEsm": [
             ".jsx"
-        ]
+        ],
+        "collectCoverage": true,
+        "coverageReporters": [
+            "text",
+            "lcov"
+        ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 30,
+                "functions": 30,
+                "lines": 30,
+                "statements": 30
+            }
+        }
     },
     "dependencies": {
         "react": "^19.0.0",
