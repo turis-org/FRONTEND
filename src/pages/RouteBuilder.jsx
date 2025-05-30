@@ -113,41 +113,50 @@ export default function RouteBuilder() {
     };
 
     return (
-        <div className="route-builder">
-            <Map />
-
-            <div className="form-container">
-                <AutoInput
-                    label="Откуда?"
-                    value={routePoints.from.value}
-                    onChange={handlePointChange("from")}
-                    fetchSuggestions={fetchSuggestions}
+        <div className="route-builder-contatiner">
+            <div className="route-builder">
+                <Map
+                    style={{
+                        height: "95%",
+                        borderRadius: "8px",
+                        margin: "10px 20px ",
+                        width: "65%",
+                    }}
                 />
 
-                {routePoints.stops.map((stop, index) => (
+                <div className="form-container">
                     <AutoInput
-                        key={index}
-                        label={`Точка ${index + 1}`}
-                        value={stop.value}
-                        onChange={handlePointChange("stop", index)}
-                        onRemove={() => handleRemoveStop(index)}
+                        label="Откуда?"
+                        value={routePoints.from.value}
+                        onChange={handlePointChange("from")}
                         fetchSuggestions={fetchSuggestions}
                     />
-                ))}
 
-                <AutoInput
-                    label="Куда?"
-                    value={routePoints.to.value}
-                    onChange={handlePointChange("to")}
-                    fetchSuggestions={fetchSuggestions}
-                />
+                    {routePoints.stops.map((stop, index) => (
+                        <AutoInput
+                            key={index}
+                            label={`Точка ${index + 1}`}
+                            value={stop.value}
+                            onChange={handlePointChange("stop", index)}
+                            onRemove={() => handleRemoveStop(index)}
+                            fetchSuggestions={fetchSuggestions}
+                        />
+                    ))}
 
-                <button onClick={handleAddStop}>
-                    Добавить промежуточную точку
-                </button>
-                <button onClick={handleBuildRoute} disabled={!isRouteValid}>
-                    Построить маршрут
-                </button>
+                    <AutoInput
+                        label="Куда?"
+                        value={routePoints.to.value}
+                        onChange={handlePointChange("to")}
+                        fetchSuggestions={fetchSuggestions}
+                    />
+
+                    <button onClick={handleAddStop}>
+                        Добавить промежуточную точку
+                    </button>
+                    <button onClick={handleBuildRoute} disabled={!isRouteValid}>
+                        Построить маршрут
+                    </button>
+                </div>
             </div>
         </div>
     );
