@@ -1,0 +1,94 @@
+/* components/Header.css */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    /* position: relative; */
+     /* фиксирует вверху */
+    /* position: fixed;  */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;     /* чтобы быть поверх другого контента */
+    background-color: #f9f0e9; /* обязательно, иначе будет "прозрачным" */
+    /* 100hv = 100% height screen */
+    height: 8.0vh; 
+}
+
+.logo {
+    /* height: 50px; */
+    height: 80%;
+    /* чтобы не растягивать изображение */
+    object-fit: contain; 
+}
+
+
+.nav {
+    display: flex;
+    gap: 10px;
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.burger span {
+    width: 25px;
+    height: 3px;
+    background: black;
+    border-radius: 2px;
+}
+
+/* Мобильная адаптация */
+/* если ширина экрана такая, то поменя1 стили */
+@media (max-width: 768px) {
+    .header {
+        height: 8.0vh;
+    }
+    
+    /* Кнопки спрятаны по умолчанию */
+    .nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #f9f0e9; /* используем тот же фон, что и у хедера */
+    }
+
+    /* Когда menuOpen === true, добавляется класс open, и меню становится видимым. */
+    .nav.open {
+        display: flex;
+    }
+
+    .burger {
+        display: flex;
+    }
+
+    .nav button {
+        background: none;       /* убираем фон */
+        border: none;           /* убираем рамку */
+        padding: 0;             /* убираем внутренние отступы */
+        margin: 0;              /* убираем внешние отступы */
+        font-size: 18px;
+        color: black;           /* цвет текста */
+        cursor: pointer;
+        font-family: inherit;   /* наследуем шрифт от родителя */
+        text-align: left;
+        width: 100%;
+        transition: color 0.3s ease;
+    }
+
+    .nav button:hover {
+        color: #8c6e4e;         /* цвет текста при наведении */
+    }
+}

@@ -1,0 +1,8 @@
+// чтобы исключить копирование локальных модулей
+node_modules
+.git
+; .env
+; .env.test
+dist
+*.log
+.DS_Store

@@ -1,0 +1,62 @@
+/* RouteResult.css */
+
+.route-result-container {
+    width: 100%;
+    height: 100%;
+    /* height: calc(100vh - (8vh + 20px)); */
+    /* Центрируем контейнер */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f0e9;
+
+    /* Полное отключение прокрутки */
+    overflow: hidden;
+    left: 0;
+
+    margin: 0;
+    padding: 0;
+}
+
+.route-result {
+    width: 80%;
+    height: 80%;
+    /* max-width: 1200px;
+    max-height: 800px; */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* position: fixed; */
+
+}
+
+.route-result h2 {
+    padding:  16px;
+    margin: 0;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.route-result h4 {
+    padding: 0px 20px;
+    margin: 0;
+    /* background-color: #f8f8f8; */
+    /* border-bottom: 1px solid #e0e0e0; */
+}
+
+/* .leaflet-container {
+    flex: 1;
+    width: 100%;
+    height: calc(100% - 37px);
+} */
+
+/* RouteResult.css
+.route-result {
+    display: flex;
+    height: 100vh;
+    background-color: #f9f0e9;
+}
+ */

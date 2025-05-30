@@ -1,0 +1,18 @@
+# dependencies
+/node_modules
+
+/dist
+
+# local env files
+# .env
+.env.local
+.env.*.local
+# .env.test
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
